@@ -36,4 +36,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Plugins
-          path: out/Release/*
+          path: bin/Release/*
