@@ -45,7 +45,7 @@ namespace History.Commands
             foreach (Action a in actions)
                 sender.SendInfoMessage(a.ToString());
             if (actions.Count == 0)
-                sender.SendErrorMessage("没有查询到这个图格的历史记录.");
+                sender.SendErrorMessage("没有查询到这个图格的修改历史.");
         }
     }
 }

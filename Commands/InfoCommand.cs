@@ -62,7 +62,7 @@ namespace History.Commands
             // 0 actions escape
             if (actions.Count == 0)
             {
-                sender.SendInfoMessage("{0} 在指定区域中未执行任何操作.", account);
+                sender.SendInfoMessage("{0}在指定区域中未执行任何图格操作.", account);
                 return;
             }
 
