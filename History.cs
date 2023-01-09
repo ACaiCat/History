@@ -1754,7 +1754,7 @@ namespace History
 		{
 			if (e.Parameters.Count != 2 && e.Parameters.Count != 3)
 			{
-				e.Player.SendErrorMessage("用法错误! 正确用法:: /rollback <账号名> <时间> [范围]");
+				e.Player.SendErrorMessage("用法错误! 正确用法: /rollback <账号名> <时间> [范围]");
 				return;
 			}
 			int radius = 10000;
