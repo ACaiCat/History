@@ -1,0 +1,39 @@
+name: Main
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+     - master
+  pull_request:
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  build:
+    name: Build Plugins
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.100'
+
+      - name: Build
+        id: build
+        run: |
+          dotnet build -c Release
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Plugins
+          path: out/Release/*
