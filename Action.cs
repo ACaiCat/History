@@ -10,7 +10,7 @@ namespace History
 {
     public class Action
     {
-        public string account;
+        public string ?account;
         public byte action;
         public ushort data;
         public byte style;
@@ -18,7 +18,7 @@ namespace History
         public int time;
         public int x;
         public int y;
-        public string text;
+        public string ?text;
         public int alt;
         public int random;
         public bool direction;
