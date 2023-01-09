@@ -80,7 +80,6 @@ namespace History
         private static void Connect()
         {
             string text = Path.Combine(TShock.SavePath, "HistoryDB.sqlite");
-            Directory.CreateDirectory(Path.GetDirectoryName(text));
             Database = new SqliteConnection($"Data Source={text}");
         }
         void Queue(string account, int X, int Y, byte action, ushort data = 0, byte style = 0, short paint = 0, string text = null, int alternate = 0, int random = 0, bool direction = false)
@@ -1648,8 +1647,7 @@ namespace History
             TShockAPI.Commands.ChatCommands.Add(new Command("history.reenact", Reenact, "reenact", "复现"));
             TShockAPI.Commands.ChatCommands.Add(new Command("history.rollback", Rollback, "rollback", "回溯"));
             TShockAPI.Commands.ChatCommands.Add(new Command("history.rollback", Undo, "rundo", "撤销"));
-            SqlTableCreator sqlcreator = new SqlTableCreator(Database,
-                Database.GetSqlType() == SqlType.Sqlite ? (IQueryBuilder)new SqliteQueryCreator() : new MysqlQueryCreator());
+            SqlTableCreator sqlcreator = new SqlTableCreator(Database,(IQueryBuilder)new SqliteQueryCreator());
             sqlcreator.EnsureTableStructure(new SqlTable("History",
                 new SqlColumn("Time", MySqlDbType.Int32),
                 new SqlColumn("Account", MySqlDbType.VarChar) { Length = 50 },
