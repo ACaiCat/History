@@ -1,7 +1,7 @@
 ﻿/*
  * Credit to MarioE for original plugin.
 */
-
+using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace History
 	public class History : TerrariaPlugin
 	{
 		public static List<Action> Actions = new List<Action>(SaveCount);
-		public static IDbConnection Database => TShock.DB;
+		public static IDbConnection Database;
 		public static DateTime Date = DateTime.UtcNow;
 		public const int SaveCount = 10;
 
@@ -70,11 +70,19 @@ namespace History
 		}
 		public override void Initialize()
 		{
-			ServerApi.Hooks.GameInitialize.Register(this, OnInitialize);
+            Connect();
+            initBreaks();
+            ServerApi.Hooks.GameInitialize.Register(this, OnInitialize);
 			ServerApi.Hooks.NetGetData.Register(this, OnGetData);
 			ServerApi.Hooks.WorldSave.Register(this, OnSaveWorld);
-			initBreaks();
 		}
+
+		private static void Connect()
+		{
+            string text = Path.Combine(TShock.SavePath, "HistoryDB.sqlite");
+            Directory.CreateDirectory(Path.GetDirectoryName(text));
+            Database = new SqliteConnection($"Data Source={text}");
+        }
 		void Queue(string account, int X, int Y, byte action, ushort data = 0, byte style = 0, short paint = 0, string text = null, int alternate = 0, int random = 0, bool direction = false)
 		{
 			if (Actions.Count == SaveCount)
